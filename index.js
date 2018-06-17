@@ -1,4 +1,5 @@
 require('babel-polyfill')
+const fs = require('fs')
 const Axios = require('axios')
 const cheerio = require('cheerio')
 const textMiner = require('text-miner')
@@ -104,6 +105,10 @@ const main = async () => {
 			return b[1] - a[1];
 	});
 	console.log(sortable)
+	var file = fs.createWriteStream('result.txt');
+	file.on('error', function(err) { /* error handling */ });
+	sortable.forEach(function(v) { file.write(v.join(', ') + '\n'); });
+	file.end();
 }
 
 main()
